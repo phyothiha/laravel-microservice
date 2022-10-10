@@ -3,6 +3,9 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Database\Seeders\RolesAndPermissionsSeeder;
+use Meraki\User\Infrastructure\Database\Seeders\UserSeeder;
+use Meraki\Ticket\Infrastructure\Database\Seeders\TicketSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,6 +16,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        $this->call([
+            RolesAndPermissionsSeeder::class,
+            UserSeeder::class,
+            TicketSeeder::class,
+        ]);
     }
 }

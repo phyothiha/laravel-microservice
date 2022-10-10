@@ -165,6 +165,7 @@ return [
         /*
          * Package Service Providers...
          */
+        Spatie\Permission\PermissionServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -175,6 +176,13 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        /**
+         * Module Application Service Providers...
+         */
+        Meraki\Foundations\Providers\BaseServiceProvider::class,
+        Meraki\User\Providers\UserServiceProvider::class,
+        Meraki\Ticket\Providers\TicketServiceProvider::class,
+        Meraki\UserGroup\Providers\UserGroupServiceProvider::class,
     ],
 
     /*
