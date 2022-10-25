@@ -16,18 +16,17 @@ class TicketService extends BaseService
     public function __construct(
         protected TicketRepository $ticketRepository,
         protected UserRepository $userRepository,
-    ) {
+    )
+    {
         //
     }
 
-    /**
-     * Create a ticket.
-     *
-     * @param  array  $inputs
-     * @return \Meraki\Ticket\Domain\Models\Ticket
-     * @throw  \Symfony\Component\HttpKernel\Exception\HttpException
-     */
-    public function create($inputs)
+    public function getAll()
+    {
+        return $this->ticketRepository->selectAll();
+    }
+
+    public function create(array $inputs)
     {
         // An agent is opening for a ticket on behalf of a customer
         // else a customer is opening a ticket.
@@ -37,23 +36,22 @@ class TicketService extends BaseService
 
         try {
             return DB::transaction(function () use ($inputs) {
-                $ticket = $this->ticketRepository
-                                ->insert($inputs);
+                $ticket = $this->ticketRepository->insert($inputs);
 
-                $agents = $this->userRepository
-                                ->getUsersByRole('agent');
+                // $agents = $this->userRepository
+                //                 ->getUsersByRole('agent');
 
                 // An agent is opening for a ticket on behalf of a customer.
-                if ($this->userHasCertainRole('agent')) {
-                    $customer = $this->userRepository
-                                    ->selectById($ticket->customer_id);
+                // if ($this->userHasCertainRole('agent')) {
+                //     $customer = $this->userRepository
+                //                     ->selectById($ticket->customer_id);
 
-                    Mail::to($customer)
-                        ->send(new TicketOpenedMail($ticket));
-                }
+                //     Mail::to($customer)
+                //         ->send(new TicketOpenedMail($ticket));
+                // }
 
-                Mail::to($agents)
-                    ->send(new TicketOpenedMail($ticket));
+                // Mail::to($agents)
+                //     ->send(new TicketOpenedMail($ticket));
 
                 return $ticket;
             });
@@ -62,15 +60,20 @@ class TicketService extends BaseService
         }
     }
 
-    // public function read(int $ticket_id)
-    // {
-    //     return $this->ticketRepository->findById($ticket_id);
-    // }
+    public function findById(int $ticket_id)
+    {
+        return $this->ticketRepository->selectById($ticket_id);
+    }
 
-    // public function update(array $attributes, int $ticket_id)
-    // {
-    //     return $this->ticketRepository->updateById($attributes, $ticket_id);
-    // }
+    public function update(int $ticket_id, array $attributes)
+    {
+        return $this->ticketRepository->updateById($ticket_id, $attributes);
+    }
+
+    public function delete(int $id)
+    {
+        $this->ticketRepository->deleteById($id);
+    }
 
     // public function loadNewQuery()
     // {

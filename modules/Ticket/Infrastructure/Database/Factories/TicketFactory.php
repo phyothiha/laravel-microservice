@@ -24,7 +24,7 @@ class TicketFactory extends Factory
         return [
             'subject' => $this->faker->sentence(),
             'description' => $this->faker->text(200),
-            'type' => rand(0, 5),
+            'type' => rand(1, 5),
             'status' => rand(1, 6),
             'priority' => rand(1, 4),
             'customer_id' => rand(1, 30),

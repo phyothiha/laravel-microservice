@@ -2,13 +2,13 @@
 
 namespace Meraki\Ticket\Application\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use Meraki\Foundations\Application\BaseController;
 use Meraki\Ticket\Domain\Models\Ticket;
 use Meraki\Ticket\Domain\Services\TicketReplyService;
 use Meraki\Ticket\Application\Http\Resources\TicketReplyResource;
 use Meraki\Ticket\Application\Http\Requests\StoreTicketReplyRequest;
 
-class TicketReplyController extends Controller
+class TicketReplyController extends BaseController
 {
     public function __construct(
         protected TicketReplyService $ticketReplyService
@@ -17,24 +17,29 @@ class TicketReplyController extends Controller
         //
     }
 
-    public function store(StoreTicketReplyRequest $request, Ticket $ticket)
+    public function index(int $ticket_id)
     {
-        $inputs = $request->safe()->only(['content']);
+        return TicketReplyResource::collection(
+            $this->ticketReplyService->getAll($ticket_id)
+        );
+    }
 
-        $cc_emails = $request->safe()->except(['content']);
+    public function store(StoreTicketReplyRequest $request, int $ticket_id)
+    {
+        $validated = $request->safe()->only(['content']);
 
-        $result = $this->ticketReplyService->create($inputs, $ticket, $cc_emails);
+        // $cc_emails = $request->safe()->except(['content']);
+
+        // $result = $this->ticketReplyService->create($validated, $ticket, $cc_emails);
+        $result = $this->ticketReplyService->create($validated, $ticket_id);
 
         return new TicketReplyResource($result);
     }
 
-    public function show()
+    public function destroy(int $ticket_id, int $reply_id)
     {
-        //
-    }
+        $this->ticketReplyService->delete($reply_id);
 
-    public function destroy()
-    {
-        //
+        return $this->simpleSuccessResponse('Ticket Deleted.');
     }
 }

@@ -84,13 +84,8 @@ class User extends Authenticatable
         return $this->belongsTo(UserGroup::class);
     }
 
-    /**
-     * Get the user's full name.
-     *
-     * @param  void
-     * @return string
-     */
-    public function getFullNameAttribute()
+    // Get the user's full name.
+    public function getFullNameAttribute(): string
     {
         return preg_replace(
             '/\s+/',
@@ -99,14 +94,8 @@ class User extends Authenticatable
         );
     }
 
-    /**
-     * Scope a query to only include users of a given time zones.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  array  $time_zones
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeOfFilterByTimeZone($query, $time_zones)
+    // Scope a query to only include users of a given time zones.
+    public function scopeOfFilterByTimeZone(Builder $query, array $time_zones)
     {
         return $query->where(function ($query) use ($time_zones) {
             foreach ($time_zones as $time_zone) {
@@ -115,32 +104,27 @@ class User extends Authenticatable
         });
     }
 
-    /**
-     * Scope a query to only include users of a given from, to date string.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  string  $from
-     * @param  string  $to
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeOfFilterByDateRange($query, $from, $to)
+    // Scope a query to only include users of a given from, to date string.
+    public function scopeOfFilterByDateRange(Builder $query, string $from, string $to)
     {
         return $query->whereDate('created_at', '>=', $from)
                      ->whereDate('created_at', '<=', $to);
     }
 
-    /**
-     * Scope a query to only include users of a given role.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  string  $role
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeOfFilterByRole($query, $role)
+    // Scope a query to only include users of a given role.
+    public function scopeOfFilterByRole(Builder $query, string $role)
     {
         return $query->whereHas('roles', function (Builder $query) use ($role) {
             return $query->where('name', $role);
         });
+    }
+
+    //  Scope a query to only include a given user of a given role.
+    public function scopeOfSearchByRole(Builder $query, string $name, string $role)
+    {
+        return $query->selectRaw('users.*, CONCAT_WS(" ", first_name, middle_name, last_name) AS full_name')
+                    ->ofFilterByRole($role)
+                    ->having('full_name', 'like', $name . '%');
     }
 
     public function isCustomer()

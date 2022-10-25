@@ -2,12 +2,14 @@
 
 namespace Meraki\Ticket\Application\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use Meraki\Ticket\Domain\Models\Ticket;
 use Meraki\Ticket\Domain\Services\TicketService;
+use Meraki\Foundations\Application\BaseController;
 use Meraki\Ticket\Application\Http\Resources\TicketResource;
 use Meraki\Ticket\Application\Http\Requests\StoreTicketRequest;
+use Meraki\Ticket\Application\Http\Requests\UpdateTicketContentRequest;
 
-class TicketController extends Controller
+class TicketController extends BaseController
 {
     public function __construct(
         protected TicketService $ticketService
@@ -18,15 +20,40 @@ class TicketController extends Controller
 
     public function index()
     {
-        return 'index route';
+        return TicketResource::collection(
+            $this->ticketService->getAll()
+        );
     }
 
     public function store(StoreTicketRequest $request)
     {
-        $inputs = $request->validated();
+        $validated = $request->validated();
 
-        $result = $this->ticketService->create($inputs);
+        $this->ticketService->create($validated);
 
-        return new TicketResource($result);
+        return $this->simpleSuccessResponse('Ticket Created.');
+    }
+
+    public function show(int $id)
+    {
+        return new TicketResource(
+            $this->ticketService->findById($id)
+        );
+    }
+
+    public function update(UpdateTicketContentRequest $request, int $id)
+    {
+        $validated = $request->validated();
+
+        $this->ticketService->update($id, $validated);
+
+        return $this->simpleSuccessResponse('Ticket Updated.');
+    }
+
+    public function destroy(int $id)
+    {
+        $this->ticketService->delete($id);
+
+        return $this->simpleSuccessResponse('Ticket Deleted.');
     }
 }

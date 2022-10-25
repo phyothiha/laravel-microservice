@@ -13,6 +13,11 @@ class TicketRepository extends BaseRepository implements TicketRepositoryContrac
         parent::__construct($model);
     }
 
+    public function selectAll($limit = 10)
+    {
+        return $this->model->latest()->paginate($limit);
+    }
+
     // public function newQuery()
     // {
     //     return $this->model->query();

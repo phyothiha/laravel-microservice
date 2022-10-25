@@ -25,6 +25,7 @@ class StoreTicketRequest extends FormRequest
 
         if ($current_user->isAgent()) {
             $rules['customer_id'] = ['required'];
+            $rules['agent_id'] = ['nullable'];
         }
 
         return $rules;

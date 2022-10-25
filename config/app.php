@@ -165,6 +165,7 @@ return [
         /*
          * Package Service Providers...
          */
+        App\Providers\FortifyServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
 
         /*
@@ -183,6 +184,8 @@ return [
         Meraki\User\Providers\UserServiceProvider::class,
         Meraki\Ticket\Providers\TicketServiceProvider::class,
         Meraki\UserGroup\Providers\UserGroupServiceProvider::class,
+        Meraki\Solution\Providers\SolutionServiceProvider::class,
+        Meraki\Tag\Providers\TagServiceProvider::class,
     ],
 
     /*

@@ -4,6 +4,15 @@ namespace Meraki\Foundations\Contracts;
 
 interface BaseRepositoryInterface
 {
+    public function newQuery();
+
+    /**
+     * Retrieve rows with limit and offset
+     *
+     * @return
+     */
+    public function selectAll($limit = 10);
+
     /**
      * Insert a row with given attributes.
      *

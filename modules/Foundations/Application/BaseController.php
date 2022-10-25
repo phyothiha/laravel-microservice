@@ -7,23 +7,23 @@ use Symfony\Component\HttpFoundation\Response;
 
 class BaseController extends Controller
 {
-    public function simpleSuccessResponse(string $message = 'success')
+    public function simpleSuccessResponse($message)
     {
         $response = [
-            'code'      => Response::HTTP_OK,
-            'status'    => 'success',
-            'message'   => $message,
+            'status_code' => Response::HTTP_OK,
+            'status_text' => 'success',
+            'message' => $message,
         ];
 
         return response()->json($response, Response::HTTP_OK);
     }
 
-    public function simpleErrorResponse(string $message = 'error')
+    public function simpleErrorResponse($message)
     {
         $response = [
-            'code'      => Response::HTTP_BAD_REQUEST,
-            'status'    => 'error',
-            'message'   => $message,
+            'status_code' => Response::HTTP_BAD_REQUEST,
+            'status_text' => 'error',
+            'message' => $message,
         ];
 
         return response()->json($response, Response::HTTP_BAD_REQUEST);

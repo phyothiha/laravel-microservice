@@ -21,6 +21,7 @@ class CreateTicketRepliesTable extends Migration
                     ->constrained();
             $table->text('content');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

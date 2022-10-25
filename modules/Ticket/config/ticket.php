@@ -2,12 +2,12 @@
 
 return [
     'type' => [
-        'general'      =>  0,
-        'question'     =>  1,
-        'incident'     =>  2,
-        'problem'      =>  3,
-        'feature'      =>  4,
-        'refund'       =>  5,
+        'general'      =>  1,
+        'question'     =>  2,
+        'incident'     =>  3,
+        'problem'      =>  4,
+        'feature'      =>  5,
+        'refund'       =>  6,
     ],
 
     'status' => [

@@ -26,6 +26,7 @@ class CreateTicketsTable extends Migration
                     ->nullable()
                     ->constrained('users');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

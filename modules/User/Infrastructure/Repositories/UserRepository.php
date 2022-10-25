@@ -13,14 +13,18 @@ class UserRepository extends BaseRepository implements UserRepositoryContract
         parent::__construct($model);
     }
 
-    /**
-     * @param  string  $role
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
     public function getUsersByRole(string $role)
     {
         return $this->model
                     ->ofFilterByRole($role)
+                    ->get();
+    }
+
+    public function searchUserByRole(string $q, string $role)
+    {
+        return $this->model
+                    ->ofSearchByRole($q, $role)
+                    ->limit(10)
                     ->get();
     }
 }

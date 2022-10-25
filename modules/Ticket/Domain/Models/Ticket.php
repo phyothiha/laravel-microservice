@@ -7,11 +7,12 @@ use Meraki\User\Domain\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Meraki\Ticket\Domain\Models\TicketReply;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Meraki\Ticket\Infrastructure\Database\Factories\TicketFactory;
 
 class Ticket extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'subject',
@@ -20,6 +21,7 @@ class Ticket extends Model
         'status',
         'priority',
         'customer_id',
+        'agent_id',
     ];
 
     protected $with = ['customer', 'agent'];
@@ -29,7 +31,12 @@ class Ticket extends Model
         return TicketFactory::new();
     }
 
-    public function ticket_replies()
+    /**
+     * Eloquent: Relationships
+     *
+     * @link https://laravel.com/docs/8.x/eloquent-relationships
+     */
+    public function replies()
     {
         return $this->hasMany(TicketReply::class);
     }
@@ -44,6 +51,11 @@ class Ticket extends Model
         return $this->belongsTo(User::class, 'agent_id');
     }
 
+    /**
+     * Eloquent: Mutators & Casting
+     *
+     * @link https://laravel.com/docs/8.x/eloquent-mutators
+     */
     protected function getName($name)
     {
         return Str::ucfirst(
@@ -87,10 +99,5 @@ class Ticket extends Model
     // public function attachments()
     // {
     //     return $this->morphMany(Attachment::class, 'attachable');
-    // }
-
-    // public function tags()
-    // {
-    //     return $this->morphToMany(Tag::class, 'taggable');
     // }
 }

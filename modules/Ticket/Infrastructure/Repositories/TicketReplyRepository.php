@@ -12,4 +12,11 @@ class TicketReplyRepository extends BaseRepository implements TicketRepositoryCo
     {
         parent::__construct($model);
     }
+
+    public function selectAllByRelation(int $ticket_id, $limit = 10)
+    {
+        return $this->model->where('ticket_id', $ticket_id)
+                    ->latest()
+                    ->paginate($limit);
+    }
 }

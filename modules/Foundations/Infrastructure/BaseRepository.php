@@ -17,6 +17,21 @@ class BaseRepository implements BaseRepositoryInterface
         $this->model = $model;
     }
 
+    public function newQuery()
+    {
+        return $this->model->query();
+    }
+
+    /**
+     * Retrieve rows with limit and offset.
+     *
+     * @return \Illuminate\Pagination\LengthAwarePaginator
+     */
+    public function selectAll($limit = 10)
+    {
+        return $this->model->paginate($limit);
+    }
+
     /**
      * Insert a row with given attributes.
      *
