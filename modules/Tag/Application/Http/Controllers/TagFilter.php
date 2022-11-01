@@ -33,7 +33,7 @@ class TagFilter extends Controller
         // sortBy direction
 
         return TagResource::collection(
-            $tags->paginate(10)
+            $tags->paginate(5)
         );
     }
 }

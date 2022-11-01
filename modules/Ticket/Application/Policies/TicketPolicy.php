@@ -24,7 +24,7 @@ class TicketPolicy
     public function updateProperty(User $user, Ticket $ticket)
     {
         return $user->id === $ticket->agent_id ||
-               $user->id === $ticket->customer_id;
+               $user->isAgent();
     }
 
     public function createReply(User $user, Ticket $ticket)

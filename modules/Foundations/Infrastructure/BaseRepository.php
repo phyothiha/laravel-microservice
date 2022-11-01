@@ -29,7 +29,7 @@ class BaseRepository implements BaseRepositoryInterface
      */
     public function selectAll($limit = 10)
     {
-        return $this->model->paginate($limit);
+        return $this->model->latest()->paginate($limit);
     }
 
     /**

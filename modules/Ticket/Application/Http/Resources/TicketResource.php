@@ -2,6 +2,7 @@
 
 namespace Meraki\Ticket\Application\Http\Resources;
 
+use Illuminate\Support\Arr;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Meraki\User\Application\Http\Resources\UserResourceSmall;
 
@@ -29,6 +30,7 @@ class TicketResource extends JsonResource
             'agent' => new UserResourceSmall($this->whenLoaded('agent')),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+            'deleted_at' => $this->deleted_at,
         ];
     }
 }

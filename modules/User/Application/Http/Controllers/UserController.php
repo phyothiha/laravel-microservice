@@ -3,11 +3,12 @@
 namespace Meraki\User\Application\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Meraki\User\Domain\Services\UserService;
+use Meraki\Foundations\Application\BaseController;
 use Meraki\User\Application\Http\Resources\UserResource;
+use Meraki\User\Application\Http\Resources\UserResourceSmall;
 
-class UserController extends Controller
+class UserController extends BaseController
 {
     public function __construct(
         protected UserService $userService
@@ -22,6 +23,13 @@ class UserController extends Controller
 
         return UserResource::collection(
             $this->userService->searchUserByRole($params)
+        );
+    }
+
+    public function show(int $id)
+    {
+        return new UserResourceSmall(
+            $this->userService->findById($id)
         );
     }
 }

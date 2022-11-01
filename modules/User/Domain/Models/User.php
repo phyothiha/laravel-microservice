@@ -13,10 +13,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Meraki\UserGroup\Domain\Models\UserGroup;
 use Meraki\User\Infrastructure\Database\Factories\UserFactory;
+use Spatie\Tags\HasTags;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, HasTags;
 
     protected $fillable = [
         'username',

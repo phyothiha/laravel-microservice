@@ -2,7 +2,7 @@
 
 namespace Meraki\Tag\Infrastructure\Repositories;
 
-use Spatie\Tags\Tag;
+use Meraki\Tag\Domain\Models\Tag;
 use Meraki\Tag\Contracts\TagRepositoryContract;
 use Meraki\Foundations\Infrastructure\BaseRepository;
 

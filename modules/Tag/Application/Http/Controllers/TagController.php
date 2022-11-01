@@ -32,13 +32,6 @@ class TagController extends BaseController
         return $this->simpleSuccessResponse('Tag Created.');
     }
 
-    public function show(int $id)
-    {
-        return new TagResource(
-            $this->tagService->findById($id)
-        );
-    }
-
     public function update(StoreTagRequest $request, int $id)
     {
         $validated = $request->validated();

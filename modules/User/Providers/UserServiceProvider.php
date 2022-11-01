@@ -4,7 +4,7 @@ namespace Meraki\User\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Meraki\User\Contracts\UserRepositoryContract;
-use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Database\Eloquent\Relations\Relation;;
 use Meraki\User\Infrastructure\Repositories\UserRepository;
 
 class UserServiceProvider extends ServiceProvider

@@ -7,6 +7,9 @@ use Meraki\Tag\Application\Http\Controllers\TagController;
 Route::prefix('api/v1')
     ->middleware(['api', 'auth:sanctum'])
     ->group(function () {
-        Route::get('tags/filters', TagFilter::class)->name('tags.filter');
-        Route::apiResource('tags', TagController::class);
+        Route::get('tags/filters', TagFilter::class)
+            ->name('tags.filter');
+
+        Route::apiResource('tags', TagController::class)
+            ->except(['show']);
     });

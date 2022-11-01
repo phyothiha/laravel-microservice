@@ -20,6 +20,7 @@ class UserResourceSmall extends JsonResource
             'full_name' => $this->full_name,
             'email' => $this->email,
             'work_number' => $this->work_number,
+            'role' => $this->getRoleNames()[0],
         ];
     }
 }

@@ -38,7 +38,8 @@ class UpdateTicketPropertyRequest extends FormRequest
                 'type' => ['required'],
                 'status' => ['required'],
                 'priority' => ['required'],
-                'customer_id' => ['required'],
+                'customer_id' => ['nullable'],
+                'agent_id' => ['nullable'],
             ];
         }
 

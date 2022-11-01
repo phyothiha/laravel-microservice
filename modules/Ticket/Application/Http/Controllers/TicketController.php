@@ -2,7 +2,6 @@
 
 namespace Meraki\Ticket\Application\Http\Controllers;
 
-use Meraki\Ticket\Domain\Models\Ticket;
 use Meraki\Ticket\Domain\Services\TicketService;
 use Meraki\Foundations\Application\BaseController;
 use Meraki\Ticket\Application\Http\Resources\TicketResource;

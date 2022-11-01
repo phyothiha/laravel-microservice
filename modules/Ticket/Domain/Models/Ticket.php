@@ -2,17 +2,19 @@
 
 namespace Meraki\Ticket\Domain\Models;
 
+use Spatie\Tags\HasTags;
 use Illuminate\Support\Str;
+use Meraki\Tag\Domain\Models\Tag;
 use Meraki\User\Domain\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Meraki\Ticket\Domain\Models\TicketReply;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Meraki\Ticket\Infrastructure\Database\Factories\TicketFactory;
 
 class Ticket extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, HasTags;
 
     protected $fillable = [
         'subject',
@@ -29,6 +31,18 @@ class Ticket extends Model
     protected static function newFactory()
     {
         return TicketFactory::new();
+    }
+
+    public static function getTagClassName(): string
+    {
+        return Tag::class;
+    }
+
+    public function tags()
+    {
+        return $this
+            ->morphToMany(self::getTagClassName(), 'taggable', 'taggables', null, 'tag_id')
+            ->orderBy('order_column');
     }
 
     /**
