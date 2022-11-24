@@ -18,6 +18,20 @@ class TicketRepository extends BaseRepository implements TicketRepositoryContrac
         return $this->model->latest()->paginate($limit);
     }
 
+    // customer_id, agent_id
+    public function getUserTicketByStatusCode($user_id, $status_code)
+    {
+        return $this->model
+                    ->ofStatusCode($status_code)
+                    ->where('customer_id', $user_id);
+    }
+
+    // public function get
+
+
+    // user's tickets -> customer pov
+    // users tickets -> customer admin pov
+
     // public function newQuery()
     // {
     //     return $this->model->query();

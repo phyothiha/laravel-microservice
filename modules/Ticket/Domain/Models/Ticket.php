@@ -110,6 +110,16 @@ class Ticket extends Model
         }
     }
 
+    /**
+     * Eloquent: Query Scopes
+     *
+     * @link https://laravel.com/docs/8.x/eloquent#query-scopes
+     */
+    public function scopeOfStatusCode($query, $status_code)
+    {
+        return $query->where('status', $status_code);
+    }
+
     // public function attachments()
     // {
     //     return $this->morphMany(Attachment::class, 'attachable');

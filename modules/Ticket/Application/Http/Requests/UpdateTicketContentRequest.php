@@ -33,6 +33,9 @@ class UpdateTicketContentRequest extends FormRequest
         $current_user = $this->user();
 
         if ($current_user->isAgent()) {
+            $rules['type'] = ['nullable'];
+            $rules['status'] = ['nullable'];
+            $rules['priority'] = ['nullable'];
             $rules['customer_id'] = ['required'];
         }
 

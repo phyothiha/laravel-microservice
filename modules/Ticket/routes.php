@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Meraki\Ticket\Application\Http\Controllers\TicketController;
+use Meraki\Ticket\Application\Http\Controllers\TicketFilter;
 use Meraki\Ticket\Application\Http\Controllers\TicketProperties;
 use Meraki\Ticket\Application\Http\Controllers\TicketReplyController;
 
@@ -10,6 +11,8 @@ Route::prefix('api/v1')
     ->group(function () {
         Route::put('/tickets/{id}/properties', TicketProperties::class)
                 ->name('tickets.properties');
+
+        Route::get('tickets/filters', TicketFilter::class)->name('tickets.filter');
 
         Route::apiResource('tickets', TicketController::class)
                 ->parameters([

@@ -70,19 +70,29 @@ class User extends Authenticatable
     //     return $this->hasMany(UserMetadata::class, 'user_id');
     // }
 
+    /**
+     * Eloquent: Relationships
+     *
+     * @link https://laravel.com/docs/8.x/eloquent-relationships
+     */
+    public function user_group()
+    {
+        return $this->belongsTo(UserGroup::class);
+    }
+
     public function tickets()
     {
-        return $this->hasMany(Ticket::class);
+        return $this->hasMany(Ticket::class, 'customer_id');
+    }
+
+    public function ticketsAssign()
+    {
+        return $this->hasMany(Ticket::class, 'agent_id');
     }
 
     public function ticket_replies()
     {
         return $this->hasMany(TicketReply::class);
-    }
-
-    public function user_group()
-    {
-        return $this->belongsTo(UserGroup::class);
     }
 
     // Get the user's full name.
@@ -142,4 +152,9 @@ class User extends Authenticatable
     {
         return $this->hasRole('admin');
     }
+
+    // public function getRole()
+    // {
+    //     return $this->getRoleNames()[0];
+    // }
 }

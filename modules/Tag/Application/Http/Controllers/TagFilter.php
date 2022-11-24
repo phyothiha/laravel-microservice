@@ -25,8 +25,8 @@ class TagFilter extends Controller
     {
         $tags = $this->TagRepository->newQuery();
 
-        $tags->when($request->input('term'), function ($query, $term) {
-            return $query->where('name->en', 'like', '%' . $term . '%');
+        $tags->when($request->input('q'), function ($query, $q) {
+            return $query->where('name->en', 'like', '%' . $q . '%');
         });
 
         // sortBy column name

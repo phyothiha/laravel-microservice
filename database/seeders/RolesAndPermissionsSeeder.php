@@ -33,10 +33,24 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::insert($permissions->toArray());
 
         $permissionsByRole = [
+            'customer-admin' => [
+                'create a ticket',
+                'create a parent ticket',
+                'create a child ticket',
+            ],
             'customer' => [
                 'create a ticket',
                 'create a parent ticket',
                 'create a child ticket',
+            ],
+            'agent-admin' => [
+                'create a ticket',
+                'create a parent ticket',
+                'create a child ticket',
+                'create a linked ticket',
+                'respond to a ticket',
+                'send a ticket reply',
+                'add public notes',
             ],
             'agent' => [
                 'create a ticket',
